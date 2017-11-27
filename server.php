@@ -4,7 +4,8 @@
 		$mysqli->set_charset("utf8");
 		switch ($_POST['type']) {
 			case 'add':
-				$sql = $mysqli->query("SELECT name, price FROM `products` WHERE `id` = 1");
+				$barcode = $_POST["barcode"];
+				$sql = $mysqli->query("SELECT name, price FROM `products` WHERE `barcode` = '$barcode'");
 				if($sql->num_rows > 0) {
 				    while($row = $sql->fetch_assoc()) {
 				    	$json_array = [
