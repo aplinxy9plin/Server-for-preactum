@@ -4,18 +4,23 @@
 		$mysqli->set_charset("utf8");
 		switch ($_POST['type']) {
 			case 'add':
-				$sql = "SELECT name FROM products";
-				$result = $mysqli->query($sql);
-
-				if ($result->num_rows > 0) {
-				    // output data of each row
-				    while($row = $result->fetch_assoc()) {
-				        echo $row['name'];echo "<br>";
+				$sql = $mysqli->query("SELECT name, price FROM `products` WHERE `id` = 1");
+				if($sql->num_rows > 0) {
+				    while($row = $sql->fetch_assoc()) {
+				    	$json_array = [
+				            "type" => "response",
+				            "products" => [
+				                [
+				                    "name" => $row['name'],
+				                    "price" => $row['price']
+				                ]
+				            ]
+				        ]; 
+						$body = json_encode($json_array);
+						echo $body;
+				    	//var_dump(json_decode($body));
 				    }
-				} else {
-				    echo "0 results";
 				}
-				//var_dump($sql);
 				break;
 			case 'buy':
 				
